@@ -2,7 +2,7 @@ let scores = [0, 0]
 let currentScore = 0
 let activePlayer = 0
 let playing = true
-const WINNING_SCORE = 20
+const WINNING_SCORE =10
 const playerNames = ["Kamronbek", "AduMalik"]
 
 const dice = document.getElementById('dice')
@@ -23,8 +23,8 @@ function init() {
     document.getElementById('current-0').textContent = 0
     document.getElementById('current-1').textContent = 0
 
-    document.querySelector("#player-0 h2").textContent = playerNames[0]
-    document.querySelector("#player-1 h2").textContent = playerNames[1]
+    document.querySelector("#player-0 h2").textContent = "O'yinchilar - 1"
+    document.querySelector("#player-1 h2").textContent = "O'yinchilar - 2"
 
     btnRoll.disabled = false
     btnHold.disabled = false
@@ -99,7 +99,7 @@ btnHold.addEventListener("click", () => {
         winnerPlayer.classList.remove("active")
 
         winnerPlayer.querySelector('h2').textContent =
-            `G'olib : ${playerNames[activePlayer]}`
+            `G'olib : o'yinchi ${playerNames[activePlayer]}`
 
         btnRoll.disabled = true
         btnHold.disabled = true
