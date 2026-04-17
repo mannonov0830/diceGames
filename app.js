@@ -3,7 +3,6 @@ let currentScore = 0
 let activePlayer = 0
 let playing = true
 const WINNING_SCORE = 20
-const playerNames = ["Kamronbek", "AduMalik"]
 
 const dice = document.getElementById('dice')
 const btnNew = document.getElementById("btn-new")
@@ -11,6 +10,8 @@ const btnRoll = document.getElementById("btn-roll")
 const btnHold = document.getElementById("btn-hold")
 const playing0 = document.getElementById("player-0")
 const playing1 = document.getElementById("player-1")
+
+const playerNames = ["Kamronbek", "Sardorbek"]
 
 function init() {
     scores = [0, 0]
@@ -23,9 +24,9 @@ function init() {
     document.getElementById('current-0').textContent = 0
     document.getElementById('current-1').textContent = 0
 
-    document.querySelector("#player-0 h2").textContent = playerNames[0]
-    document.querySelector("#player-1 h2").textContent = playerNames[1]
 
+    document.querySelector("#player-0 h2").textContent = "O'yinchilar-1"
+    document.querySelector("#player-1 h2").textContent = "O'yinchilar-2"
     btnRoll.disabled = false
     btnHold.disabled = false
 
@@ -39,9 +40,8 @@ function init() {
 }
 
 function switchPlayer() {
-    currentScore = 0
     document.getElementById(`current-${activePlayer}`).textContent = 0
-
+    currentScore = 0
     activePlayer = activePlayer === 0 ? 1 : 0
 
     playing0.classList.toggle("active")
@@ -61,23 +61,11 @@ btnRoll.addEventListener("click", () => {
         dice.classList.remove('rolling')
     }, 400)
 
-    // ❗ 1 chiqsa → switch
-    if (diceNumber === 1) {
-        currentScore = 0
-        document.getElementById(`current-${activePlayer}`).textContent = 0
+    if (diceNumber !== 1) {
+        currentScore += diceNumber
+        document.getElementById(`current-${activePlayer}`).textContent = currentScore
+    } else {
         switchPlayer()
-        return
-    }
-
-    currentScore += diceNumber
-    document.getElementById(`current-${activePlayer}`).textContent = currentScore
-
-    // ❗ 20 dan oshsa → avtomatik switch (MUHIM FIX)
-    if (scores[activePlayer] + currentScore > WINNING_SCORE) {
-        currentScore = 0
-        document.getElementById(`current-${activePlayer}`).textContent = 0
-        switchPlayer()
-        return
     }
 })
 
@@ -89,8 +77,7 @@ btnHold.addEventListener("click", () => {
     document.getElementById(`score-${activePlayer}`).textContent =
         scores[activePlayer]
 
-    // 🏆 faqat 20 ga teng bo‘lsa yutadi
-    if (scores[activePlayer] === WINNING_SCORE) {
+    if (scores[activePlayer] >= WINNING_SCORE) {
         playing = false
         dice.classList.add("hidden")
 
@@ -99,7 +86,7 @@ btnHold.addEventListener("click", () => {
         winnerPlayer.classList.remove("active")
 
         winnerPlayer.querySelector('h2').textContent =
-            `G'olib : ${playerNames[activePlayer]}`
+            `G'olib o'yinchi : ${playerNames[activePlayer]}`
 
         btnRoll.disabled = true
         btnHold.disabled = true
@@ -111,4 +98,3 @@ btnHold.addEventListener("click", () => {
 btnNew.addEventListener("click", init)
 
 init()
-
