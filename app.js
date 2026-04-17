@@ -11,7 +11,10 @@ const btnHold = document.getElementById("btn-hold")
 const playing0 = document.getElementById("player-0")
 const playing1 = document.getElementById("player-1")
 
-const playerNames = ["Kamronbek", "Sardorbek"]
+const playerNames = [
+    prompt("1-o'yinchi ismini kiriting"),
+    prompt("2-o'yinchi ismini kiriting")
+]   
 
 function init() {
     scores = [0, 0]
