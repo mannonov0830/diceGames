@@ -123,6 +123,7 @@ h1 {
   animation: roll 0.4s ease;
 }
 
+
 @keyframes roll {
   0% {
     transform: rotate(0) scale(1);
@@ -156,15 +157,15 @@ button {
 }
 
 .btn-new {
-  background: #95a5a6;
+  background: #021db9;
 }
 
 .btn-roll {
-  background: #e74c3c;
+  background: #e2210b;
 }
 
 .btn-hold {
-  background: #27ae60;
+  background: #069e45;
 }
 
 button:hover:not(:disabled) {
