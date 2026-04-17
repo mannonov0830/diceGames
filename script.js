@@ -32,15 +32,52 @@ function init() {
 
 }
 
+function switchPlayer() {
+    document.getElementById(`current-${activePlayer}`).textContent = currentScore
+    currentScore = 0
+    activePlayer = activePlayer === 0 ? 1 : 0
+
+    playing0.classList.toggle("active")
+    playing1.classList.toggle("active")
+}
+
 btnRoll.addEventListener("click", () => {
+    if (!playing) return;
     const diceNumber = Math.trunc(Math.random() * 6) + 1
-    console.log(diceNumber);
-    
-    dice.src=`images/dice-${diceNumber}.png`
+
+    dice.src = `images/dice-${diceNumber}.png`
     dice.classList.remove("hidden")
     dice.classList.add("rolling")
 
-    setTimeout(()=>{
+    setTimeout(() => {
         dice.classList.remove('rolling')
-    },400)
+    }, 400)
+
+    if (diceNumber !== 1) {
+        currentScore += diceNumber
+        document.getElementById(`current-${activePlayer}`).textContent = currentScore
+    } else {
+        switchPlayer()
+    }
+})
+
+btnHold.addEventListener("click", () => {
+    if (!playing) return;
+    scores[activePlayer] += currentScore
+    document.getElementById(`score-${activePlayer}`).textContent = scores[activePlayer]
+
+
+    if (scores[activePlayer] >= WINNING_SCORE) {
+        playing = false
+        dice.classList.add("hidden")
+        const winnerPlayer = document.getElementById(`player-${activePlayer}`)
+        winnerPlayer.classList.add("winner")
+        winnerPlayer.classList.remove("active")
+        winnerPlayer.querySelector('h2').textContent = `G'olib : O'yinchi ${activePlayer}`
+        btnRoll.disabled = true
+        btnHold.disabled = true
+    } else {
+        switchPlayer()
+    }
+
 })
