@@ -24,5 +24,23 @@ function init() {
     document.getElementById('score-1').textContent = 0
     document.getElementById('current-0').textContent = 0
     document.getElementById('current-1').textContent = 0
+    document.querySelector("#player-0 h2").textContent = "O'yinchi - 0"
+    document.querySelector("#player-1 h2").textContent = "O'yinchi - 1"
+
+    btnRoll.disabled = false
+    btnHold.disabled = false
 
 }
+
+btnRoll.addEventListener("click", () => {
+    const diceNumber = Math.trunc(Math.random() * 6) + 1
+    console.log(diceNumber);
+    
+    dice.src=`images/dice-${diceNumber}.png`
+    dice.classList.remove("hidden")
+    dice.classList.add("rolling")
+
+    setTimeout(()=>{
+        dice.classList.remove('rolling')
+    },400)
+})
